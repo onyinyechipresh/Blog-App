@@ -11,6 +11,5 @@ public class PostResponseDto {
     private String title;
     private String description;
     private String price;
-    @Enumerated(EnumType.STRING)
     private Categorry category;
 }

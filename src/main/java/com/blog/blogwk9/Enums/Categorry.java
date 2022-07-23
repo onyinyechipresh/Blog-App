@@ -1,9 +1,8 @@
 package com.blog.blogwk9.Enums;
 
 public enum Categorry {
-    Footware,
+    Shoes,
     Accessories,
-    Menswear,
-    Femaleware,
+   Cloths,
     Bags
 }
