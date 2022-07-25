@@ -3,6 +3,8 @@ package com.blog.blogwk9.Service.ServiceImpl;
 import com.blog.blogwk9.Dto.PostDto;
 import com.blog.blogwk9.Dto.ResponseDto.PostResponseDto;
 import com.blog.blogwk9.Exception.CustomAppException;
+import com.blog.blogwk9.Exception.ResourceAlreadyExistException;
+import com.blog.blogwk9.Exception.ResourceNotFoundException;
 import com.blog.blogwk9.Model.Admin;
 import com.blog.blogwk9.Model.Customer;
 import com.blog.blogwk9.Model.PageCriterias.PostPage;
@@ -34,7 +36,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto postProduct(PostDto postDto) {
         Admin admin = adminRepository.findById(postDto.getUserId()).orElseThrow
-                (() -> new CustomAppException("User with id: " + postDto.getUserId() + " was not found"));
+                (() -> new ResourceAlreadyExistException("User with id: " + postDto.getUserId() + " was not found"));
 
         PostResponseDto postResponeDto = new PostResponseDto();
         try {
@@ -57,7 +59,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto updateProduct(Long id, PostDto postDto) {
         adminRepository.findById(postDto.getUserId()).orElseThrow
-                (() -> new CustomAppException("You are not permitted to peform this action"));
+                (() -> new ResourceAlreadyExistException("You are not permitted to peform this action"));
 
 
        Post postUpdate =  postRepository.findById(id).get();

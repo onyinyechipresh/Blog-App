@@ -7,6 +7,8 @@ import com.blog.blogwk9.Dto.ResponseDto.ResponsePersonDto;
 import com.blog.blogwk9.Enums.Reaction;
 import com.blog.blogwk9.Enums.Role;
 import com.blog.blogwk9.Exception.CustomAppException;
+import com.blog.blogwk9.Exception.ResourceAlreadyExistException;
+import com.blog.blogwk9.Exception.ResourceNotFoundException;
 import com.blog.blogwk9.Model.Customer;
 import com.blog.blogwk9.Model.Like;
 import com.blog.blogwk9.Model.Post;
@@ -35,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService{
                     personDto.getPassword()
             );
             if (userSignUp.isPresent()) {
-                throw new CustomAppException("User already exist");
+                throw new ResourceNotFoundException("User already exist");
             }
             Customer customer = new Customer();
             customer.setEmail(personDto.getEmail());
@@ -49,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public ResponsePersonDto login(String email, String password) {
         Customer customer = customerRepository.findByEmailAndPassword(email,password)
-                .orElseThrow(()-> new CustomAppException("User does not exist"));
+                .orElseThrow(()-> new ResourceNotFoundException("User does not exist"));
 
         ResponsePersonDto responsePersonDto = new ResponsePersonDto();
         responsePersonDto.setEmail(customer.getEmail());
@@ -60,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public String likes(LikeDto likeDto) {
         Customer customer = customerRepository.findById(likeDto.getCustomerId())
-                .orElseThrow(() -> new CustomAppException("Sorry you can't peform this action"));
+                .orElseThrow(() -> new ResourceAlreadyExistException("Sorry you can't peform this action"));
         Post post = postRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new CustomAppException("Product does not exist"));
         Like like = likeRepository.findLikeByCustomerAndPostAndReaction(customer,post,likeDto.getReaction());

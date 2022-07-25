@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("DELETE FROM Post p WHERE p.id = ?1")
     void deletePostByPostId(Long id);
 
+    Post findByPrice(String price);
+
 }

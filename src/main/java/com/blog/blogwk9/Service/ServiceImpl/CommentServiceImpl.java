@@ -3,6 +3,7 @@ package com.blog.blogwk9.Service.ServiceImpl;
 import com.blog.blogwk9.Dto.CommentDto;
 import com.blog.blogwk9.Dto.ResponseDto.CommentResponseDto;
 import com.blog.blogwk9.Exception.CustomAppException;
+import com.blog.blogwk9.Exception.ResourceAlreadyExistException;
 import com.blog.blogwk9.Model.Comments;
 import com.blog.blogwk9.Model.Customer;
 import com.blog.blogwk9.Model.PageCriterias.CommentPage;
@@ -34,10 +35,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponseDto makeComment(CommentDto commentDto) {
         Customer customer = customerRepository.findById(commentDto.getUserId()).orElseThrow
-                (() -> new CustomAppException("User with id: " + commentDto.getUserId() + " was not found"));
+                (() -> new ResourceAlreadyExistException("User with id: " + commentDto.getUserId() + " was not found"));
 
         Post post = postRepository.findById(commentDto.getPostId()).orElseThrow
-                (() -> new CustomAppException("Post with id: " + commentDto.getPostId() + " does not exist"));
+                (() -> new ResourceAlreadyExistException("Post with id: " + commentDto.getPostId() + " does not exist"));
 
 
         Comments comment = new Comments();
@@ -55,15 +56,15 @@ public class CommentServiceImpl implements CommentService {
     public CommentResponseDto editComment(Long id,CommentDto commentDto) {
 
         customerRepository.findById(commentDto.getUserId()).orElseThrow
-                (() -> new CustomAppException("User with id: " + commentDto.getUserId() + " was not found"));
+                (() -> new ResourceAlreadyExistException("User with id: " + commentDto.getUserId() + " was not found"));
 
         postRepository.findById(commentDto.getPostId()).orElseThrow
-                (() -> new CustomAppException("Product with id: " + commentDto.getPostId() + " does not exist"));
+                (() -> new ResourceAlreadyExistException("Product with id: " + commentDto.getPostId() + " does not exist"));
 
 
         Comments editComment = commentRepository.findById(id).get();
         if(editComment == null){
-            throw new CustomAppException("Comment with id: " + id + " does not exist");
+            throw new ResourceAlreadyExistException("Comment with id: " + id + " does not exist");
         }
 
             editComment.setDescription(commentDto.getDescription());
@@ -80,7 +81,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long id) {
         commentRepository.findById(id)
-                .orElseThrow(() -> new CustomAppException("Comment with id: " +id+ " does not exist"));
+                .orElseThrow(() -> new ResourceAlreadyExistException("Comment with id: " +id+ " does not exist"));
 
         commentRepository.deleteCommentByCommentId(id);
 

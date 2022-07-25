@@ -4,6 +4,8 @@ import com.blog.blogwk9.Dto.PersonDto;
 import com.blog.blogwk9.Dto.ResponseDto.ResponsePersonDto;
 import com.blog.blogwk9.Enums.Role;
 import com.blog.blogwk9.Exception.CustomAppException;
+import com.blog.blogwk9.Exception.ResourceAlreadyExistException;
+import com.blog.blogwk9.Exception.ResourceNotFoundException;
 import com.blog.blogwk9.Model.Admin;
 import com.blog.blogwk9.Repository.AdminRepository;
 import com.blog.blogwk9.Service.AdminService;
@@ -25,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
                 personDto.getPassword()
         );
         if(adminSignUp.isPresent()){
-            throw new CustomAppException("Admin already exist");
+            throw new ResourceNotFoundException("Admin already exist");
         }
         Admin admin = new Admin();
         admin.setName(personDto.getName());
@@ -38,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponsePersonDto login(String email, String password) {
         Admin admin = adminRepository.findByEmailAndPassword(email,password)
-                .orElseThrow(()-> new CustomAppException("Admin does not exist"));
+                .orElseThrow(()-> new ResourceAlreadyExistException("Admin does not exist"));
        ResponsePersonDto responsepersonDto = new ResponsePersonDto();
        responsepersonDto.setName(admin.getName());
        responsepersonDto.setEmail(admin.getEmail());
