@@ -1,9 +1,7 @@
 package com.blog.blogwk9.Model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,14 +9,17 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="customer_table")
 public class Customer extends Person{
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-//    @JoinColumn (name = "fk_comments", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Comments> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
+    List<Like> likes;
 
 }

@@ -2,9 +2,11 @@ package com.blog.blogwk9.Controller;
 
 import com.blog.blogwk9.Dto.PostDto;
 import com.blog.blogwk9.Dto.ResponseDto.PostResponseDto;
+import com.blog.blogwk9.Model.PageCriterias.PostPage;
 import com.blog.blogwk9.Model.Post;
 import com.blog.blogwk9.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +45,8 @@ public class PostController {
     }
 
     @GetMapping("/viewAll")
-    public ResponseEntity <List<PostResponseDto>> viewAllProducts(){
-        List<PostResponseDto> postResponseDto = postService.viewAllProducts();
-        return new ResponseEntity<>(postResponseDto,HttpStatus.OK);
+    public ResponseEntity <Page<Post>> viewAllProducts(PostPage postPage){
+        return new ResponseEntity<>(postService.viewAllProducts(postPage),HttpStatus.OK);
     }
 
 }

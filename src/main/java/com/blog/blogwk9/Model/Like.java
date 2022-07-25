@@ -1,6 +1,6 @@
 package com.blog.blogwk9.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.blog.blogwk9.Enums.Reaction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,20 +11,17 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name="comment_table")
-public class Comments extends BaseClass{
-
-    private String description;
+public class Like extends BaseClass{
+    @Enumerated(EnumType.STRING)
+    private Reaction reaction;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-//    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Post post;
+
 }

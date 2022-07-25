@@ -11,8 +11,8 @@ import java.util.List;
 public class Admin extends Person{
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_post", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "admin")
+//    @JoinColumn(name="fk_admin", referencedColumnName = "id")
     private List<Post> post;
 
 

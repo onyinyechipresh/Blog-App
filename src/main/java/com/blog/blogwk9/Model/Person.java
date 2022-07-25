@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Person extends BaseClass{
     private String name;
     @Column(nullable = false,
-            unique = true)
+            unique = true,length=45)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
