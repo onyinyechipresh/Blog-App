@@ -42,7 +42,7 @@ public class AdminServiceImplTest {
         admin.setPassword("123456");
         admin.setRole(Role.Admin);
 
-        adminRepository.save(admin);
+//        adminRepository.save(admin);
     }
 
     @Test
@@ -52,8 +52,9 @@ public class AdminServiceImplTest {
         post.setDescription("Ox standing fan");
         post.setPrice("25000");
         post.setCategory(Categorry.Accessories);
-        Post post1 = postRepository.findByPrice("25000");
-        assertEquals(post1.getTitle(),"standing Fan");
+//        postRepository.save(post);
+//        Post post1 = postRepository.findByPrice("25000");
+        assertEquals(post.getTitle(),"standing Fan");
     }
 
 
