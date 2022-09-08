@@ -71,6 +71,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>blog-wk10</finalName>
     </build>
 
 </project>
